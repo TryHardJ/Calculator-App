@@ -1,5 +1,9 @@
-.App {
+*{
   text-align: center;
+  background-color: rgb(40, 40, 40);
+}
+
+.App {
   
 }
 
@@ -8,14 +12,22 @@
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
   justify-content: center;
-  
+}
+
+.App-Calculator div {
+  display: flex;
+  border: 1px solid royalblue;
+  border-radius: 1rem;
 }
 
 .App-Calculator button {
+  width: 10rem;
   margin: 0.5rem;
   border-radius: 1rem;
-  font-size: 3rem;
-
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  background-color: rgb(171, 171, 171);
+  padding: 0.5rem;
 }
 
 

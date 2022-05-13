@@ -7,27 +7,34 @@
   
 }
 
+#App-Calculator {
+  border: 1px solid rgb(65, 105, 225);
+  color:rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  padding: 5rem;
+  margin: 1rem 15.5rem;
+  text-align: right;
+}
 
-.App-Calculator {
+.App-Buttons {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
   justify-content: center;
 }
 
-.App-Calculator div {
-  display: flex;
-  border: 1px solid royalblue;
-  border-radius: 1rem;
-}
-
-.App-Calculator button {
+.App-Buttons button {
   width: 10rem;
   margin: 0.5rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   font-size: 1rem;
   color: rgb(255, 255, 255);
   background-color: rgb(171, 171, 171);
   padding: 0.5rem;
+}
+
+.App-Buttons :hover {
+  cursor: pointer;
+  opacity: 70%;
 }
 
 

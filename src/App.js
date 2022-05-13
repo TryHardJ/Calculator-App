@@ -2,10 +2,8 @@ import './App.css';
 
 function App() {
 
-  
   function Row(button1, button2, button3, button4, button5, button6) {
-    /*onClick={() => document.getElementById('App-Calculator').innerHTML = "RAD | Deg"}*/
-    this.button1 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button1}>{button1}</button>;
+    this.button1 = <button onClick={() => calculate(button1)}>{button1}</button>;
     this.button2 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button2}>{button2}</button>;
     this.button3 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button3}>{button3}</button>;
     this.button4 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button4}>{button4}</button>;
@@ -13,12 +11,18 @@ function App() {
     this.button6 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button6}>{button6}</button>;
   };
 
-  const row1 = new Row ("RAD | Deg", "x!", "(", ")", "%", "CE");
-  const row2 = new Row ("lnv", "sin", "7", "8", "9", "/");
-  const row3 = new Row ("ln", "cos", "4", "5", "6", "x");
-  const row4 = new Row ("e", "tan", "1", "2", "3", "-");
-  const row5 = new Row ("Ans", "EXP", "0", ".", "=", "+");
+  const row1 = new Row ("abs", "pow", "(", ")", "%", "CE");
+  const row2 = new Row ("sqrt", "sin", "7", "8", "9", "/");
+  const row3 = new Row ("log", "cos", "4", "5", "6", "x");
+  const row4 = new Row ("PI", "tan", "1", "2", "3", "-");
+  const row5 = new Row ("Ans", "exp", "0", ".", "=", "+");
 
+  const calculator = [];
+  
+  function calculate(info) {
+    calculator.push(info);
+    document.getElementById('App-Calculator').innerHTML = calculator.toString(); 
+  }
     
     return (
       <div className="App">

@@ -4,11 +4,11 @@ function App() {
 
   function Row(button1, button2, button3, button4, button5, button6) {
     this.button1 = <button onClick={() => calculate(button1)}>{button1}</button>;
-    this.button2 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button2}>{button2}</button>;
-    this.button3 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button3}>{button3}</button>;
-    this.button4 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button4}>{button4}</button>;
-    this.button5 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button5}>{button5}</button>;
-    this.button6 = <button onClick={() => document.getElementById('App-Calculator').innerHTML = button6}>{button6}</button>;
+    this.button2 = <button onClick={() => calculate(button2)}>{button2}</button>;
+    this.button3 = <button onClick={() => calculate(button3)}>{button3}</button>;
+    this.button4 = <button onClick={() => calculate(button4)}>{button4}</button>;
+    this.button5 = <button onClick={() => calculate(button5)}>{button5}</button>;
+    this.button6 = <button onClick={() => calculate(button6)}>{button6}</button>;
   };
 
   const row1 = new Row ("abs", "pow", "(", ")", "%", "CE");
@@ -17,11 +17,46 @@ function App() {
   const row4 = new Row ("PI", "tan", "1", "2", "3", "-");
   const row5 = new Row ("Ans", "exp", "0", ".", "=", "+");
 
-  const calculator = [];
+  let calculator = [];
   
   function calculate(info) {
+    let numberArray = [];
+    let number ="";
+    let answer = 0;
+    
     calculator.push(info);
-    document.getElementById('App-Calculator').innerHTML = calculator.toString(); 
+    
+    if(info === "="){
+      for (let x of calculator) {
+
+        let counter = 0;
+
+        if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
+          
+          for(let x of numberArray){
+            number += x;
+          }
+          answer += Number(number);
+          
+          number = "";
+          number += x;
+          counter = 1;
+
+
+          if(counter === 0)
+            numberArray.push(x);
+          else
+            numberArray = [];
+        }
+        document.getElementById('App-Calculator').innerHTML = answer;
+      }
+
+      let i  =Number(numberArray.join("").toString());
+      number += i;
+      answer += Number(number); 
+    }
+
+    document.getElementById('App-Calculator').innerHTML = calculator.join(" ").toString();
   }
     
     return (

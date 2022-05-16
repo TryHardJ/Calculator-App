@@ -18,45 +18,56 @@ function App() {
   const row5 = new Row ("Ans", "exp", "0", ".", "=", "+");
 
   let calculator = [];
+  let numberArray = [];
+  let number ="";
+  let answer = 0;
   
   function calculate(info) {
-    let numberArray = [];
-    let number ="";
-    let answer = 0;
-    
+
     calculator.push(info);
-    
+
+    document.getElementById('App-Calculator').innerHTML = calculator.join(" ").toString();
+
     if(info === "="){
       for (let x of calculator) {
-
+        console.log(x)
         let counter = 0;
 
         if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
           
           for(let x of numberArray){
+            
             number += x;
+
+            console.log(number);
           }
           answer += Number(number);
+
+          console.log(answer);
           
           number = "";
           number += x;
-          counter = 1;
-
-
-          if(counter === 0)
-            numberArray.push(x);
-          else
-            numberArray = [];
+          counter += 1;
         }
-        document.getElementById('App-Calculator').innerHTML = answer;
+        if(counter === 0) {
+          numberArray.push(x);
+          console.log(x)
+        }
+        else
+          numberArray = [];
       }
 
       let i  =Number(numberArray.join("").toString());
-      number += i;
-      answer += Number(number); 
-    }
+      console.log(i)
 
-    document.getElementById('App-Calculator').innerHTML = calculator.join(" ").toString();
+      number += i;
+      console.log(number)
+
+      answer += Number(number);
+      console.log(answer) 
+      
+      document.getElementById('App-Calculator').innerHTML = answer;
+    }
   }
     
     return (

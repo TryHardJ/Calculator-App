@@ -29,42 +29,33 @@ function App() {
     document.getElementById('App-Calculator').innerHTML = calculator.join(" ").toString();
 
     if(info === "="){
+
+      calculator.pop();
+
       for (let x of calculator) {
-        console.log(x)
         let counter = 0;
 
         if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
           
           for(let x of numberArray){
-            
             number += x;
-
-            console.log(number);
           }
-          answer += Number(number);
 
-          console.log(answer);
-          
+          answer += Number(number);
           number = "";
           number += x;
           counter += 1;
         }
+
         if(counter === 0) {
           numberArray.push(x);
-          console.log(x)
         }
         else
           numberArray = [];
       }
 
-      let i  =Number(numberArray.join("").toString());
-      console.log(i)
-
-      number += i;
-      console.log(number)
-
+      number += Number(numberArray.join("").toString());
       answer += Number(number);
-      console.log(answer) 
       
       document.getElementById('App-Calculator').innerHTML = answer;
     }

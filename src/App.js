@@ -21,6 +21,28 @@ function App() {
   let total = 0, answer = 0, answer2 = 0; 
   let numberArray = [];
   let number ="", operator="";
+
+  function setOperator(operator, total, answer, answer2){
+    switch(operator){
+      case "-":
+        total = answer - answer2;
+      break;
+      case "+":
+        total = answer + answer2;
+      break;
+      case "/":
+        total = answer / answer2;
+      break;
+      case "x":
+        total = answer * answer2;
+      break;
+      case "%":
+        total = answer % answer2;
+      break;
+      default: 
+    }
+    return total;
+  }
   
   function calculate(info) {
 
@@ -45,57 +67,36 @@ function App() {
           if(answer === 0){
             answer += Number(number);
             operator = x;
-          }
+          }               
           else if (answer !== 0){
             answer2 += Number(number);
 
-            switch(operator){
-              case "-":
-                total = answer - answer2;
-              break;
-              case "+":
-                total = answer + answer2;
-              break;
-              case "/":
-                total = answer / answer2;
-              break;
-              case "x":
-                total = answer * answer2;
-              break;
-              case "%":
-                total = answer % answer2;
-              break; 
-            }
+            total = setOperator(operator, total, answer, answer2);
 
-            operator="";
-            answer = 0;
+            operator = x;
             answer2 = 0;
-            
             answer = total;
             total = 0;
           }
 
           number = "";
-
-          //number += x;
-
-          
-          
           counter += 1;
+          numberArray = [];
         }
 
-        if(counter === 0) {
+        if(counter === 0) 
           numberArray.push(x);
-        }
-        else
-          numberArray = [];
       }
 
       number += Number(numberArray.join("").toString());
-      answer += Number(number);
+      if(answer === 0)
+        answer += Number(number);
+      else if (answer !== 0){
+        answer2 += Number(number);
+        total = setOperator(operator, total, answer, answer2);
+      } 
       
-      document.getElementById('App-Calculator').innerHTML = answer;
-      
+      document.getElementById('App-Calculator').innerHTML = total;
     }
   }
     

@@ -13,7 +13,7 @@ function App() {
 
   const row1 = new Row ("abs", "pow", "(", ")", "%", "CE");
   const row2 = new Row ("sqrt", "sin", "7", "8", "9", "/");
-  const row3 = new Row ("log", "cos", "4", "5", "6", "x");
+  const row3 = new Row ("log", "cos", "4", "5", "6", "X");
   const row4 = new Row ("PI", "tan", "1", "2", "3", "-");
   const row5 = new Row ("Ans", "exp", "0", ".", "=", "+");
 
@@ -33,7 +33,7 @@ function App() {
       case "/":
         total = answer / answer2;
       break;
-      case "x":
+      case "X":
         total = answer * answer2;
       break;
       case "%":
@@ -43,47 +43,57 @@ function App() {
     }
     return total;
   }
+
+  function findOperator(calculator, char) {
+      if(char === "("){
+        for (let x of calculator) {
+          let start = 0, end = 0, returnArray = [];
+          let text = calculator.join("").toString();
+          start = text.search("(");
+          end = text.search(")");
+          start += 1;
+          return returnArray = calculator.slice(start,end);
+        }
+      }
+      
+  }
+
+  function pemdas(calculator){
+    let p=[], e=[], m=[], d=[], a=[], s=[];
+    p = findOperator(calculator,"(");
+    
+  }
   
   function calculate(info) {
-
     calculator.push(info);
-
-    document.getElementById('App-Calculator').innerHTML = calculator.join(" ").toString();
+    document.getElementById('App-Calculator').innerHTML = calculator.join("").toString();
 
     if(info === "="){
-
       calculator.pop();
+
+      
 
       for (let x of calculator) {
         let counter = 0;
-
-        if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
- 
+        if(x === "-" || x === "+" || x === "/" || x === "X" || x === "%" || x === "."){
           for(let x of numberArray){
             number += x;
           }
-
-          //answer += Number(number);
           if(answer === 0){
             answer += Number(number);
             operator = x;
           }               
           else if (answer !== 0){
             answer2 += Number(number);
-
-            total = setOperator(operator, total, answer, answer2);
-
+            answer = setOperator(operator, total, answer, answer2);
             operator = x;
             answer2 = 0;
-            answer = total;
             total = 0;
           }
-
           number = "";
           counter += 1;
           numberArray = [];
         }
-
         if(counter === 0) 
           numberArray.push(x);
       }
@@ -95,11 +105,10 @@ function App() {
         answer2 += Number(number);
         total = setOperator(operator, total, answer, answer2);
       } 
-      
       document.getElementById('App-Calculator').innerHTML = total;
     }
   }
-    
+
     return (
       <div className="App">
         <div id='App-Calculator'></div>
@@ -112,7 +121,6 @@ function App() {
         </div>
       </div>
     );
-  
 }
   
 export default App;

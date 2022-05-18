@@ -18,9 +18,9 @@ function App() {
   const row5 = new Row ("Ans", "exp", "0", ".", "=", "+");
 
   let calculator = [];
+  let total = 0, answer = 0, answer2 = 0; 
   let numberArray = [];
-  let number ="";
-  let answer = 0;
+  let number ="", operator="";
   
   function calculate(info) {
 
@@ -36,14 +36,51 @@ function App() {
         let counter = 0;
 
         if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
-          
+ 
           for(let x of numberArray){
             number += x;
           }
 
-          answer += Number(number);
+          //answer += Number(number);
+          if(answer === 0){
+            answer += Number(number);
+            operator = x;
+          }
+          else if (answer !== 0){
+            answer2 += Number(number);
+
+            switch(operator){
+              case "-":
+                total = answer - answer2;
+              break;
+              case "+":
+                total = answer + answer2;
+              break;
+              case "/":
+                total = answer / answer2;
+              break;
+              case "x":
+                total = answer * answer2;
+              break;
+              case "%":
+                total = answer % answer2;
+              break; 
+            }
+
+            operator="";
+            answer = 0;
+            answer2 = 0;
+            
+            answer = total;
+            total = 0;
+          }
+
           number = "";
-          number += x;
+
+          //number += x;
+
+          
+          
           counter += 1;
         }
 
@@ -58,6 +95,7 @@ function App() {
       answer += Number(number);
       
       document.getElementById('App-Calculator').innerHTML = answer;
+      
     }
   }
     

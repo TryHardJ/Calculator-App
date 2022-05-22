@@ -42,34 +42,45 @@ function App() {
     return total;
   }
 
-  function findOperator(calculator, char) {
-    let returnArray = [], loopArray = calculator;
+  function findOperator(calculator) {
+    let mdArray = [], asArray = [];
     let start = 0, end = 0;
-    for(let x = 0; x < loopArray.length; x++) {
-      if(loopArray[x] === char){
-        start = loopArray.indexOf(loopArray[x]);
+    //for(let x = 0; x < loopArray.length; x++) {
+    for(let x of calculator){
+      if(x === "x" || x === "/"){
+        start = calculator.indexOf(x);
+        console.log(start)
         end = start + 2;
-        if(end > loopArray.length){
-          end = start + 1;
-        }
-        start -= 1;
-        while(loopArray[end] === char){
+        
+        while(calculator[end] === "x" || calculator[end] === "/"){
           end += 2;
         }
-        returnArray.push(loopArray.splice(start,end));
+        
+        start -= 2;
+        while(calculator[start] === "x" || calculator[start] === "/"){
+          start -=2;
+        }
+        
+        console.log(start)
+        mdArray = calculator.slice(start,end);
+        console.log(mdArray)
       }
     }
-    returnArray.reverse();
-    return returnArray;
+    //returnArray = loopArray;
+    console.log(mdArray)
+    console.log(calculator)
+    //returnArray.reverse();
+    //console.log(returnArray)
+    return mdArray;
   }
   
   function pemdas(calculator){
-    let m=[], d=[], a=[], s=[];
-    m = findOperator(calculator, "x");
-    d = findOperator(calculator, "/");
-    a = findOperator(calculator, "+");
-    s = findOperator(calculator, "-");
-    calculator = m.concat(d,a,s);
+    let m=[];
+    m = findOperator(calculator);
+    
+    console.log(m)
+    console.log(calculator)
+    
     return calculator;
   }
   

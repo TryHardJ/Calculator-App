@@ -1,4 +1,3 @@
-import { type } from '@testing-library/user-event/dist/type';
 import './App.css';
 
 function App() {
@@ -84,6 +83,7 @@ function App() {
 
   function pemdas(calculator) {
     let mdArray = [], asArray=[];
+    //let undefined;
     for(let x of calculator){
       let start = 0, end = 0, arraySum = 0;
       if(x === "x" || x === "/"){
@@ -96,9 +96,6 @@ function App() {
         }
         
         start -= 2;
-        console.log(start)
-        
-        console.log(calculator[start])
         console.log(start)
         
         while(calculator[start] === "x" || calculator[start]=== "/" ){
@@ -128,19 +125,28 @@ function App() {
         start = calculator.indexOf(x);
         console.log(start)
         end = start + 2;
-        
+        console.log(end)
         while(calculator[end] === "+" || calculator[end] === "-"){
           end += 2;
         }
-        end -= 1;
+        if(calculator[end] === "x" || calculator[end] === "/"){
+          end -= 1;
+        }
+        console.log(end)
         
         start -= 2;
         while(calculator[start] === "+" || calculator[start] === "-"){
           start -=2;
         }
+        if(typeof calculator[start] !== typeof "string"){
+          start += 1;
+        }
+
         for(; start < end; start ++){
-          asArray.push(calculator[start])
-          delete calculator[start];
+            if(typeof calculator[start] !== typeof undefined){
+              asArray.push(calculator[start])
+            delete calculator[start];
+          }
         }
         console.log(asArray)
       }

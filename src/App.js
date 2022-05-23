@@ -9,16 +9,13 @@ function App() {
     this.button4 = <button onClick={() => calculate(button4)}>{button4}</button>;
   };
 
-  
   const row1 = new Row ("7", "8", "9", "/");
   const row2 = new Row ("4", "5", "6", "x");
   const row3 = new Row ("1", "2", "3", "-");
   const row4 = new Row ("0", ".", "=", "+");
 
   let calculator = [];
-  let total = 0, answer = 0, answer2 = 0; 
-  let numberArray = [];
-  let number ="", operator="";
+  let total = 0;
 
   function setOperator(operator, total, answer, answer2){
     switch(operator){
@@ -42,11 +39,52 @@ function App() {
     return total;
   }
 
-  function findOperator(calculator) {
-    let mdArray = [], asArray = [];
-    let start = 0, end = 0;
-    //for(let x = 0; x < loopArray.length; x++) {
+  function sumOf(array){
+    let total = 0, answer = 0, answer2 = 0; 
+    let numberArray = [];
+    let number ="", operator="";
+
+    for (let x of array) {
+      let counter = 0;
+      if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
+        for(let x of numberArray){
+          number += x;
+        }
+        if(answer === 0){
+          answer += Number(number);
+          operator = x;
+        }               
+        else if (answer !== 0){
+          answer2 += Number(number);
+          answer = setOperator(operator, total, answer, answer2);
+          operator = x;
+          answer2 = 0;
+          total = 0;
+        }
+        number = "";
+        counter += 1;
+        numberArray = [];
+      }
+      if(counter === 0) 
+        numberArray.push(x);
+    }
+
+    number += Number(numberArray.join("").toString());
+    if(answer === 0){
+      answer += Number(number);
+      return answer
+    }
+    else if (answer !== 0){
+      answer2 += Number(number);
+      total = setOperator(operator, total, answer, answer2);
+      return total;
+    }
+  }
+
+  function pemdas(calculator) {
+    let mdArray = [], asArray=[];
     for(let x of calculator){
+      let start = 0, end = 0, arraySum = 0;
       if(x === "x" || x === "/"){
         start = calculator.indexOf(x);
         console.log(start)
@@ -57,31 +95,45 @@ function App() {
         }
         
         start -= 2;
+        console.log(typeof calculator[start])
         while(calculator[start] === "x" || calculator[start] === "/"){
           start -=2;
         }
+        console.log(typeof calculator[start])
+        if(typeof calculator[start] == "string")
+          start +=1;
         
-        console.log(start)
         mdArray = calculator.slice(start,end);
         console.log(mdArray)
+
+        for(; start < end; start ++){
+          delete calculator[start];
+        }
+
+        arraySum = (sumOf(mdArray)).toString();
+        asArray.push(arraySum);
+      }
+      else if (x === "+" || x === "-"){
+        start = calculator.indexOf(x);
+        console.log(start)
+        end = start + 2;
+        
+        while(calculator[end] === "+" || calculator[end] === "-"){
+          end += 2;
+        }
+        end -= 1;
+        
+        start -= 2;
+        while(calculator[start] === "+" || calculator[start] === "-"){
+          start -=2;
+        }
+        for(; start < end; start ++){
+          asArray.push(calculator[start])
+          delete calculator[start];
+        }
       }
     }
-    //returnArray = loopArray;
-    console.log(mdArray)
-    console.log(calculator)
-    //returnArray.reverse();
-    //console.log(returnArray)
-    return mdArray;
-  }
-  
-  function pemdas(calculator){
-    let m=[];
-    m = findOperator(calculator);
-    
-    console.log(m)
-    console.log(calculator)
-    
-    return calculator;
+    return asArray;
   }
   
   function calculate(info) {
@@ -90,41 +142,8 @@ function App() {
 
     if(info === "="){
       calculator.pop();
-
       calculator = pemdas(calculator);
-      
-      for (let x of calculator) {
-        let counter = 0;
-        if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
-          for(let x of numberArray){
-            number += x;
-          }
-          if(answer === 0){
-            answer += Number(number);
-            operator = x;
-          }               
-          else if (answer !== 0){
-            answer2 += Number(number);
-            answer = setOperator(operator, total, answer, answer2);
-            operator = x;
-            answer2 = 0;
-            total = 0;
-          }
-          number = "";
-          counter += 1;
-          numberArray = [];
-        }
-        if(counter === 0) 
-          numberArray.push(x);
-      }
-
-      number += Number(numberArray.join("").toString());
-      if(answer === 0)
-        answer += Number(number);
-      else if (answer !== 0){
-        answer2 += Number(number);
-        total = setOperator(operator, total, answer, answer2);
-      } 
+      total = sumOf(calculator);
       document.getElementById('App-Calculator').innerHTML = total;
     }
   }

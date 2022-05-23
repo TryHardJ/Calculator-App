@@ -95,14 +95,17 @@ function App() {
         }
         
         start -= 2;
-        console.log(typeof calculator[start])
-        while(calculator[start] === "x" || calculator[start] === "/"){
+    
+        while(calculator[start] === "x" || calculator[start] === "/" || calculator[start] === typeof calculator[start]){
           start -=2;
         }
-        console.log(typeof calculator[start])
-        if(typeof calculator[start] == "string")
+        console.log(start)
+        if(calculator[start] === "+" || calculator[start] === "-" || calculator[start] !== typeof start)
           start +=1;
+        console.log(typeof calculator[start])
         
+        console.log(start)
+
         mdArray = calculator.slice(start,end);
         console.log(mdArray)
 
@@ -131,8 +134,10 @@ function App() {
           asArray.push(calculator[start])
           delete calculator[start];
         }
+        console.log(asArray)
       }
     }
+    console.log(asArray)
     return asArray;
   }
   

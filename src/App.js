@@ -1,3 +1,4 @@
+import { type } from '@testing-library/user-event/dist/type';
 import './App.css';
 
 function App() {
@@ -95,13 +96,20 @@ function App() {
         }
         
         start -= 2;
-    
-        while(calculator[start] === "x" || calculator[start] === "/" || calculator[start] === typeof calculator[start]){
+        console.log(start)
+        
+        console.log(calculator[start])
+        console.log(start)
+        
+        while(calculator[start] === "x" || calculator[start]=== "/" ){
           start -=2;
         }
+
+        if(typeof calculator[start] !== typeof "string"){
+          start += 1;
+        }
         console.log(start)
-        if(calculator[start] === "+" || calculator[start] === "-" || calculator[start] !== typeof start)
-          start +=1;
+        
         console.log(typeof calculator[start])
         
         console.log(start)

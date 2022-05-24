@@ -83,39 +83,27 @@ function App() {
 
   function pemdas(calculator) {
     let mdArray = [], asArray=[];
-    //let undefined;
     for(let x of calculator){
       let start = 0, end = 0, arraySum = 0;
       if(x === "x" || x === "/"){
         start = calculator.indexOf(x);
-        console.log(start)
-        end = start + 2;
-        
-        while(calculator[end] === "x" || calculator[end] === "/"){
-          end += 2;
-        }
-        
-        start -= 2;
-        console.log(start)
-        
-        while(calculator[start] === "x" || calculator[start]=== "/" ){
-          start -=2;
+        end = start + 1;
+
+        while(calculator[start] !== "+" && calculator[start] !== "-"
+        && typeof calculator[start] === typeof "string"){
+          start -= 1;
         }
 
-        if(typeof calculator[start] !== typeof "string"){
-          start += 1;
+        while(calculator[end] !== "+" && calculator[end] !== "-"
+        && typeof calculator[end] === typeof "string"){
+          end += 1;
         }
-        console.log(start)
-        
-        console.log(typeof calculator[start])
-        
-        console.log(start)
-
-        mdArray = calculator.slice(start,end);
-        console.log(mdArray)
 
         for(; start < end; start ++){
+          if(typeof calculator[start] !== typeof undefined){
+            mdArray.push(calculator[start]);
           delete calculator[start];
+          }
         }
 
         arraySum = (sumOf(mdArray)).toString();
@@ -123,29 +111,28 @@ function App() {
       }
       else if (x === "+" || x === "-"){
         start = calculator.indexOf(x);
-        console.log(start)
-        end = start + 2;
-        console.log(end)
-        while(calculator[end] === "+" || calculator[end] === "-"){
-          end += 2;
-        }
-        if(calculator[end] === "x" || calculator[end] === "/"){
-          end -= 1;
-        }
-        console.log(end)
-        
-        start -= 2;
-        while(calculator[start] === "+" || calculator[start] === "-"){
-          start -=2;
-        }
-        if(typeof calculator[start] !== typeof "string"){
-          start += 1;
+        end = start + 1;
+
+        while(calculator[start] !== "x" && calculator[start] !== "/"
+        && typeof calculator[start] === typeof "string"){
+          start -= 1;
         }
 
+        while(calculator[end] !== "x" && calculator[end] !== "/"
+        && typeof calculator[end] === typeof "string"){
+          end += 1;
+        }
+
+        while(calculator[end] !== "+" && calculator[end] !== "-"
+        && typeof calculator[end] === typeof "string"){
+          end -= 1;
+        }
+        end += 1;
+
         for(; start < end; start ++){
-            if(typeof calculator[start] !== typeof undefined){
-              asArray.push(calculator[start])
-            delete calculator[start];
+          if(typeof calculator[start] !== typeof undefined){
+            asArray.push(calculator[start]);
+          delete calculator[start];
           }
         }
         console.log(asArray)
@@ -166,7 +153,6 @@ function App() {
       document.getElementById('App-Calculator').innerHTML = total;
     }
   }
-
     return (
       <div className="App">
         <div id='App-Calculator'></div>

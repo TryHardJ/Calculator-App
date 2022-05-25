@@ -16,6 +16,7 @@ function App() {
 
   let calculator = [];
   let total = 0;
+  let counter = 0;
 
   function setOperator(operator, total, answer, answer2){
     switch(operator){
@@ -128,7 +129,7 @@ function App() {
           end -= 1;
         }
         end += 1;
-        
+
         for(; start < end; start ++){
           if(typeof calculator[start] !== typeof undefined){
             asArray.push(calculator[start]);
@@ -142,18 +143,39 @@ function App() {
   
   function calculate(info) {
     calculator.push(info);
-    document.getElementById('App-Calculator').innerHTML = calculator.join("").toString();
+    document.getElementById('Calculator-Text').innerHTML = calculator.join("").toString();
 
     if(info === "="){
+      counter = 1;
       calculator.pop();
       calculator = pemdas(calculator);
       total = sumOf(calculator);
-      document.getElementById('App-Calculator').innerHTML = total;
+      document.getElementById('Calculator-Text').innerHTML = total;
+      document.getElementById('Delete-Button').innerHTML = 'AC';
+      calculator = [];
+      calculator.push((total).toString());
     }
   }
+
+  function clearCalculator() {
+    if(counter !== 0){
+      calculator = [];
+      document.getElementById('Delete-Button').innerHTML = 'CE';
+      document.getElementById('Calculator-Text').innerHTML = calculator.join("").toString();
+      counter = 0;
+    }
+    else{
+      calculator.pop();
+      document.getElementById('Calculator-Text').innerHTML = calculator.join("").toString();
+    }
+  }
+
     return (
       <div className="App">
-        <div id='App-Calculator'></div>
+        <div id='App-Calculator'>
+          <button id='Delete-Button' onClick={clearCalculator}>CE</button>
+          <p id='Calculator-Text'></p>
+        </div>
         <div className="App-Buttons">
           {row1.button1}{row1.button2}{row1.button3}{row1.button4}
           {row2.button1}{row2.button2}{row2.button3}{row2.button4}

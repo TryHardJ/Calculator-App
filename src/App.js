@@ -46,7 +46,7 @@ function App() {
 
     for (let x of array) {
       let counter = 0;
-      if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%" || x === "."){
+      if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%"){
         for(let x of numberArray){
           number += x;
         }
@@ -128,17 +128,15 @@ function App() {
           end -= 1;
         }
         end += 1;
-
+        
         for(; start < end; start ++){
           if(typeof calculator[start] !== typeof undefined){
             asArray.push(calculator[start]);
           delete calculator[start];
           }
         }
-        console.log(asArray)
       }
     }
-    console.log(asArray)
     return asArray;
   }
   

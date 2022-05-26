@@ -21,6 +21,7 @@ function App() {
   function setOperator(operator, total, answer, answer2){
     switch(operator){
       case "-":
+        if(answer )
         total = answer - answer2;
       break;
       case "+":
@@ -63,7 +64,12 @@ function App() {
           total = 0;
         }
         number = "";
-        counter += 1;
+        
+        if(answer === 0)
+          counter = 0;
+        else
+          counter += 1;
+  
         numberArray = [];
       }
       if(counter === 0) 
@@ -106,8 +112,8 @@ function App() {
           delete calculator[start];
           }
         }
-
         arraySum = (sumOf(mdArray)).toString();
+        mdArray = [];
         asArray.push(arraySum);
       }
       else if (x === "+" || x === "-"){

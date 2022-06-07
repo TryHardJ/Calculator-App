@@ -33,9 +33,6 @@ function App() {
       case "x":
         total = answer * answer2;
       break;
-      case "%":
-        total = answer % answer2;
-      break;
       default: 
     }
     return total;
@@ -48,22 +45,33 @@ function App() {
 
     for (let x of array) {
       let counter = 0;
-      if(x === "-" || x === "+" || x === "/" || x === "x" || x === "%"){
+      if(x === "-" || x === "+" || x === "/" || x === "x"){
         for(let x of numberArray){
           number += x;
+          console.log(number)
         }
         if(answer === 0){
           answer += Number(number);
+          console.log(answer)
           operator = x;
+          number = "";
+        }
+        else if(answer !== 0 && number ===""){
+          number += x;
+          counter += 1;
         }               
         else if (answer !== 0){
+          console.log(typeof number)
           answer2 += Number(number);
+          console.log(answer2)
           answer = setOperator(operator, total, answer, answer2);
+          console.log(answer)
           operator = x;
           answer2 = 0;
           total = 0;
+          number = "";
         }
-        number = "";
+        //number = "";
         
         if(answer === 0)
           counter = 0;
@@ -96,6 +104,10 @@ function App() {
         start = calculator.indexOf(x);
         end = start + 1;
 
+        while(calculator[end] ==="+" || calculator[end] === "-"){
+          end += 1;
+        }
+
         while(calculator[start] !== "+" && calculator[start] !== "-"
         && typeof calculator[start] === typeof "string"){
           start -= 1;
@@ -112,9 +124,16 @@ function App() {
           delete calculator[start];
           }
         }
+        console.log(asArray)
+        if(asArray.length === 1 && asArray[0] === "-"){
+          mdArray = asArray.concat(mdArray);
+          asArray = [];
+          console.log(mdArray)
+        }
         arraySum = (sumOf(mdArray)).toString();
         mdArray = [];
         asArray.push(arraySum);
+        console.log(asArray)
       }
       else if (x === "+" || x === "-"){
         start = calculator.indexOf(x);
@@ -141,6 +160,7 @@ function App() {
             asArray.push(calculator[start]);
           delete calculator[start];
           }
+          console.log(asArray)
         }
       }
     }
@@ -156,6 +176,7 @@ function App() {
       calculator.pop();
       calculator = pemdas(calculator);
       total = sumOf(calculator);
+      total = (!isNaN(total)) ? total : "Error";
       document.getElementById('Calculator-Text').innerHTML = total;
       document.getElementById('Delete-Button').innerHTML = 'AC';
       calculator = [];

@@ -1,3 +1,8 @@
+# Video of the Calculator
+
+https://user-images.githubusercontent.com/96887379/172714054-c9f8f93f-5d52-4459-81f8-5606771385f9.mp4
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
